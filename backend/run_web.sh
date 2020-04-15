@@ -26,4 +26,8 @@ User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')
 END
 
 # run gunicorn
-gunicorn -b 0.0.0.0:8000 config.wsgi --workers ${GUNICORN_WORKERS} --timeout ${GUNICORN_TIMEOUT} $*
+# gunicorn -b 0.0.0.0:8000 config.wsgi --workers ${GUNICORN_WORKERS} --timeout ${GUNICORN_TIMEOUT} $*
+
+# run daphne
+daphne -b 0.0.0.0 -p 8000 config.asgi:application -v 2 --proxy-headers $*
+
