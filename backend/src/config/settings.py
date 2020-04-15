@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     #Imported Modules
     'rest_framework',
+    'autofixture',
 
     #Created Apps
     'apps.buy',
