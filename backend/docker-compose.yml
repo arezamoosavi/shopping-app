@@ -2,6 +2,8 @@ version: '3'
 
 volumes:
   pgdata:
+  static_files:
+  uploaded_files:
 
 services:
 
@@ -12,12 +14,16 @@ services:
       dockerfile: ./Dockerfiles/web-app/Dockerfile
     volumes:
       - ./src:/src
+      - static_files:/static_files
+      - uploaded_files:/uploaded_files
     ports:
       - 8000:8000
     command: sh /run_web.sh
-    restart: on-failure
+    restart: always
     env_file:
       - ./.envs/.web
+      - ./.envs/.postgres
+      - ./.envs/.gunicorn
     depends_on:
       - postgres
 

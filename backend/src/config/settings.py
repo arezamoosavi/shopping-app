@@ -130,6 +130,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# static file directory
+STATIC_ROOT = os.path.join(BASE_DIR, "static_files")
+# define the media root, where all the uploaded files will be put
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploaded_files")
+# static file directory
+STATIC_ROOT = "/static_files"
+# define the media root, where all the uploaded files will be put
+MEDIA_ROOT = "/uploaded_files"
+
 
 # Logging
 
