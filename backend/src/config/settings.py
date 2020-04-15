@@ -79,12 +79,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
+
 
 
 # Password validation
@@ -124,3 +130,51 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Logging
+
+LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'request_format': {
+                'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d (%(message)s) '
+                          '%(remote_addr)s %(user_id)s "%(request_method)s '
+                          '%(path_info)s %(server_protocol)s" %(http_user_agent)s ',
+            },
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d (%(message)s) '
+            },
+        },
+        'handlers': {
+            'console_django': {
+                'class': 'logging.StreamHandler',
+                # 'filters': ['request'],
+                'formatter': 'verbose',
+            },
+            'console_project': {
+                'class': 'logging.StreamHandler',
+                # 'filters': ['request'],
+                'formatter': 'request_format',
+            },
+            'file': {
+                'class': 'logging.FileHandler',
+                'filename': BASE_DIR + '/' + 'debug.log'
+            },
+        },
+        'loggers': {
+            'django.server': {
+                'level': 'DEBUG',
+                'handlers': ['console_django'],
+
+            },
+            'django.request': {
+                'level': 'DEBUG',
+                'handlers': ['console_django'],
+            },
+            'apps': {
+                'level': 'DEBUG',
+                'handlers': ['file', 'console_django'],
+            }
+        },
+    }

@@ -1,0 +1,36 @@
+version: '3'
+
+volumes:
+  pgdata:
+
+services:
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./Dockerfiles/web-app/Dockerfile
+    volumes:
+      - ./src:/src
+    ports:
+      - 8000:8000
+    command: sh /run_web.sh
+    restart: on-failure
+    env_file:
+      - ./.envs/.web
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:9.6-alpine
+
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    env_file:
+      - ./.envs/.postgres
+    # environment:
+    #   - POSTGRES_USER=user
+    #   - POSTGRES_PASSWORD=password
+    #   - POSTGRES_DB=db
+    ports:
+      - 5432:5432
