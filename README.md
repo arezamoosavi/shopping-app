@@ -26,7 +26,7 @@ python manage.py loadtestdata buy.Orders:3000 buy.Products:2000 -d
 ```
 So to see results follow: 0.0.0.0:8000/graphql
 
-put this as query and press > button. all dummy data is shown.
+to get data put this as query and press > button. all dummy data is shown.
 ```json
 query{
   allOrders {
@@ -38,6 +38,35 @@ query{
     category
     id
     name
+  }
+}
+```
+for posting order data use this mutation
+
+```json
+
+mutation{
+  addOrder(input:{deliveryMethod:"sdssdsdd", paymentMethod: "55sdsd"}){
+    order{
+      deliveryMethod
+      paymentMethod
+      products
+      quantities
+      totalPrice
+    }
+  }
+}
+
+```
+and for posting product data:
+```json
+mutation{
+  addProduct(input:{name:"randName",category:"sthiii",quantity:5}){
+    product{
+      name
+      category
+      quantity
+    }
   }
 }
 ```

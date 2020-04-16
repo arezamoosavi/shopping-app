@@ -44,5 +44,26 @@ class IntroduceOrders(relay.ClientIDMutation):
         order = create_order(delivery_method, payment_method)
         return IntroduceOrders(order=order)
 
+
+
+class ProductInput(graphene.InputObjectType):
+    name = graphene.String()
+    category = graphene.String()
+    quantity = graphene.Int()
+    
+
+class CreateProduct(graphene.Mutation):
+    product = graphene.Field(ProductsType)
+
+    class Arguments:
+        input = ProductInput(required=True)
+
+    @staticmethod
+    def mutate(root, info, input):
+        product = Products.objects.create(**input)
+        product.save()
+        return CreateProduct(product=product)
+
 class Mutation(graphene.ObjectType):
     add_order = IntroduceOrders.Field()
+    add_product = CreateProduct.Field()
