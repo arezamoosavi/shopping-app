@@ -11,7 +11,7 @@ RUN apk update && apk add libffi-dev
 RUN pip install --upgrade pip
 COPY requirements.txt /requirements.txt
 RUN pip install --no-cache-dir -r /requirements.txt
-
+RUN pip install --no-cache-dir graphene_django django-graphiql
 RUN mkdir -p /src
 
 RUN addgroup -S django \

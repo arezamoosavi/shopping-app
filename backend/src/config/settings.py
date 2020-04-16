@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     #Imported Modules
     'rest_framework',
+    'graphene_django',
     'autofixture',
 
     #Created Apps
@@ -140,6 +141,8 @@ STATIC_ROOT = "/static_files"
 # define the media root, where all the uploaded files will be put
 MEDIA_ROOT = "/uploaded_files"
 
+# Graphql
+GRAPHENE = { 'SCHEMA': 'config.schema.schema', }
 
 # Logging
 
