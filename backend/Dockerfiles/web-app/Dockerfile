@@ -11,7 +11,14 @@ RUN apk update && apk add libffi-dev
 RUN pip install --upgrade pip
 COPY requirements.txt /requirements.txt
 RUN pip install --no-cache-dir -r /requirements.txt
+<<<<<<< HEAD
 RUN pip install --no-cache-dir graphene_django django-graphiql
+=======
+RUN pip install --no-cache-dir psycopg2-binary
+RUN pip install --no-cache-dir gunicorn daphne
+RUN pip install --no-cache-dir channels
+
+>>>>>>> dev
 RUN mkdir -p /src
 
 RUN addgroup -S django \
