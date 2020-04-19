@@ -17,17 +17,17 @@ set -o pipefail
 set -o nounset
 
 # collect static files
-python manage.py collectstatic --noinput
-python manage.py migrate --noinput
+# python manage.py collectstatic --noinput
+# python manage.py migrate --noinput
 
-python manage.py shell <<END
-from django.contrib.auth.models import User
-User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')
-END
+# python manage.py shell <<END
+# from django.contrib.auth.models import User
+# User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')
+# END
 
 # run gunicorn
-# gunicorn -b 0.0.0.0:8000 config.wsgi --workers ${GUNICORN_WORKERS} --timeout ${GUNICORN_TIMEOUT} $*
+# gunicorn -b 0.0.0.0:5000 config.wsgi --workers ${GUNICORN_WORKERS} --timeout ${GUNICORN_TIMEOUT} $*
 
 # run daphne
-daphne -b 0.0.0.0 -p 8000 config.asgi:application -v 2 --proxy-headers $*
+daphne -b 0.0.0.0 -p 5000 config.asgi:application -v 2 --proxy-headers $*
 

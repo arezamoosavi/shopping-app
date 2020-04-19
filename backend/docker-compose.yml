@@ -8,7 +8,7 @@ volumes:
 services:
 
   app:
-    container_name: app
+    # container_name: app
     build:
       context: .
       dockerfile: ./Dockerfiles/web-app/Dockerfile
@@ -17,7 +17,9 @@ services:
       - static_files:/static_files
       - uploaded_files:/uploaded_files
     ports:
-      - 8000:8000
+      - "5000:5000"
+    expose:
+      - "5000"
     command: sh /run_web.sh
     restart: always
     env_file:
@@ -47,7 +49,9 @@ services:
       context: . # We set this context to load the app requirements when building the image
       dockerfile: Dockerfiles/nginx/Dockerfile
     ports:
-      - 80:80
+      - "8000:8000"
+    expose:
+      - "8000"
     volumes:
       # nginx needs to access static files (readonly) and uploaded files(read+write)
       - static_files:/static_files
