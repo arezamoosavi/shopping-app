@@ -26,7 +26,7 @@ services:
       - ./.envs/.gunicorn
     depends_on:
       - postgres
-
+  
   postgres:
     image: postgres:9.6-alpine
 
@@ -40,3 +40,18 @@ services:
     #   - POSTGRES_DB=db
     ports:
       - 5432:5432
+  
+  nginx:
+    container_name: nginx
+    build:
+      context: . # We set this context to load the app requirements when building the image
+      dockerfile: Dockerfiles/nginx/Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      # nginx needs to access static files (readonly) and uploaded files(read+write)
+      - static_files:/static_files
+      - uploaded_files:/uploaded_files
+    depends_on:
+      - app
+      - postgres
